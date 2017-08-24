@@ -4,14 +4,14 @@ var selectedbutton='';
 var count =0;
 // Setup Restify Server
 var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3000, function () {
+server.listen(process.env.port || process.env.PORT || 3978, function () {
    console.log('%s listening to %s', server.name, server.url); 
 });
 
 // Create chat connector for communicating with the Bot Framework Service
 var connector = new builder.ChatConnector({
-    appId: '9b07c575-eb4c-4ce6-a87a-40dd9054154b',
-    appPassword: 'RzwmXKKVuBaftcRoVeKdDM2'
+    appId: process.env.MICROSOFT_APP_ID,
+    appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
 // Listen for messages from users 
