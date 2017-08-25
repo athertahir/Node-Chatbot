@@ -22,7 +22,7 @@ server.post('/api/messages', connector.listen());
 // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
 var bot = new builder.UniversalBot(connector, function (session) {
 selectedbutton = session.message.text;
-//session.send("You said: %s", selectedbutton);
+////session.send("You said: %s", selectedbutton);
 //session.send("Count is : %s", count);
     	// Echo back users text
 		if (!session.privateConversationData[login]) {
