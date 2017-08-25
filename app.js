@@ -1,7 +1,8 @@
 var restify = require('restify');
 var builder = require('botbuilder');
 var selectedbutton='';
-var count =0;
+var login=true;
+var count=0;
 // Setup Restify Server
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 80, function () {
@@ -23,45 +24,66 @@ var bot = new builder.UniversalBot(connector, function (session) {
 selectedbutton = session.message.text;
 //session.send("You said: %s", selectedbutton);
     	// Echo back users text
-		if(count==0)
+		if(login==true && count==0)
 		{
 			count=count+1;
-			session.send('Hi, I am PivBot for Service. Please tell me what you would like me to do.or type "help" at any time to be guided through my options.');		
+			session.send('Hi there. I m PivBot, an IT automation and Artificial Intelligence (AI) service provided by Catalyst Technology Group to help you perform a variety of IT tasks. Please choose an area to get started');	
+			getMainMenuHeroCard(session);
 		}
-		if(selectedbutton.indexOf('Bot.Command.NodeBot'))
+		else
 		{
-		var card = createHeroCard(session);
-        // attach the card to the reply message
-        var msg = new builder.Message(session).addAttachment(card);
-        session.send(msg);
+		if(!selectedbutton.indexOf('Bot.Command.MainMenu.NodeBot1'))
+		{
+		session.send('You Selected Accounts Receivable');
 		}
-		if(!selectedbutton.indexOf('Bot.Command.NodeBot1'))
+		else if(!selectedbutton.indexOf('Bot.Command.MainMenu.NodeBot2'))
 		{
-		//session.send('You Selected Service Tickets');
+		session.send('You Selected Customer Service');
+		}
+		else if(!selectedbutton.indexOf('Bot.Command.MainMenu.NodeBot3'))
+		{
+		session.send('You Selected HR');
+		}
+		else if(!selectedbutton.indexOf('Bot.Command.MainMenu.NodeBot4'))
+		{
+		session.send('You Selected Marketing');
+		}
+		else if(!selectedbutton.indexOf('Bot.Command.MainMenu.NodeBot5'))
+		{
+		session.send('You Selected Operations');
+		}
+		else if(!selectedbutton.indexOf('Bot.Command.MainMenu.NodeBot6'))
+		{
+		session.send('You Selected Sales');
+		}
+		else if(!selectedbutton.indexOf('Bot.Command.MainMenu.NodeBot7'))
+		{
+		createServiceMenuHeroCard(session);
+		}
+		else if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot1'))
+		{
 		session.send('Available operations are : \n\n \t\t Add Ticket \n\n \t\t Update Ticket \n\n \t\t Open Ticket' );
 		}
-		else if(!selectedbutton.indexOf('Bot.Command.NodeBot2'))
+		else if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot2'))
 		{
 		session.send('Available operations are : \n\n \t\t Project Status');
 		}
-		else if(!selectedbutton.indexOf('Bot.Command.NodeBot3'))
+		else if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 		{
 		session.send('Available operations are : \n\n \t\t Show PC Script \n\n \t\t Windows Patching \n\n \t\t Install Software \n\n \t\t Fix Printing \n\n \t\t Password Issues \n\n \t\t Mobile Email \n\n \t\t Backup Files \n\n \t\t Restore Files \n\n \t\t Slow Internet \n\n \t\t Error On Screen');
 		}
-		else if(!selectedbutton.indexOf('Bot.Command.NodeBot4'))
+		else if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot4'))
 		{
 		session.send('Currently, No Operations for System Management');
-		//session.send('Available operations are : \n\n \t\t Show PC Script \n\n \t\t Windows Patching \n\n \t\t Install Software \n\n \t\t Fix Printing \n\n \t\t Mobile Email \n\n \t\t Backup Files \n\n \t\t Restore Files \n\n \t\t Slow Internet \n\n \t\t Error On Screen');
 		}
-		else if(!selectedbutton.indexOf('Bot.Command.NodeBot5'))
+		else if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot5'))
 		{
 		session.send('Currently, No Operations for Trouble Shooting');
-		//session.send('Available operations are : \n\n \t\t Show PC Script \n\n \t\t Windows Patching \n\n \t\t Install Software \n\n \t\t Fix Printing \n\n \t\t Mobile Email \n\n \t\t Backup Files \n\n \t\t Restore Files \n\n \t\t Slow Internet \n\n \t\t Error On Screen');
 		}
-		else if(!selectedbutton.indexOf('Bot.Command.NodeBot6'))
+		else if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot6'))
 		{
 		session.send('Currently, No Operations for System Status');
-		//session.send('Available operations are : \n\n \t\t Show PC Script \n\n \t\t Windows Patching \n\n \t\t Install Software \n\n \t\t Fix Printing \n\n \t\t Mobile Email \n\n \t\t Backup Files \n\n \t\t Restore Files \n\n \t\t Slow Internet \n\n \t\t Error On Screen');
+		}
 		}
 
 
@@ -71,7 +93,7 @@ var recognizer = new builder.LuisRecognizer('https://westus.api.cognitive.micros
 bot.recognizer(recognizer);
 
 bot.dialog('Add Tickets', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.NodeBot1'))
+	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot1'))
 	{
     session.send('Inside Add Tickets');
     session.endDialog();
@@ -83,7 +105,7 @@ bot.dialog('Add Tickets', function (session) {
     matches: 'Add Tickets'
 });
 bot.dialog('Open Tickets', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.NodeBot1'))
+	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot1'))
 	{
     session.send('Inside Open Tickets');
     session.endDialog();
@@ -95,7 +117,7 @@ bot.dialog('Open Tickets', function (session) {
     matches: 'Open Tickets'
 });
 bot.dialog('Update Tickets', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.NodeBot1'))
+	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot1'))
 	{
     session.send('Inside Update Tickets');
     session.endDialog();
@@ -108,20 +130,24 @@ bot.dialog('Update Tickets', function (session) {
 });
 //////////////////////////////////////
 bot.dialog('Project Status', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.NodeBot2'))
-	{
-    session.send('Inside Project Status');
+
+    session.send('Here is your project status');
+	var card = new builder.HeroCard(session)
+        .title('Project Status')
+		.buttons([
+            builder.CardAction.openUrl(session, 'https://catalysttg.brightgauge.co/dashboards/28fe1d64-8170-11e7-a4b8-0eedd3689790/', 'Open Browser'),
+        ]);
+        // attach the card to the reply message
+        var msg = new builder.Message(session).addAttachment(card);
+        session.send(msg);
     session.endDialog();
-	}
-	else{
-			
-		}
+    session.endDialog();
     }).triggerAction({
     matches: 'Project Status'
 });
 //////////////////////////////////////
 bot.dialog('Show PC Script', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.NodeBot3'))
+	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Show PC Script');
     session.endDialog();
@@ -133,7 +159,7 @@ bot.dialog('Show PC Script', function (session) {
     matches: 'Show PC Script'
 });
 bot.dialog('Windows Patching', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.NodeBot3'))
+	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Windows Patching');
     session.endDialog();
@@ -145,7 +171,7 @@ bot.dialog('Windows Patching', function (session) {
     matches: 'Windows Patching'
 });
 bot.dialog('Install Software', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.NodeBot3'))
+	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Install Software');
     session.endDialog();
@@ -157,7 +183,7 @@ bot.dialog('Install Software', function (session) {
     matches: 'Install Software'
 });
 bot.dialog('Fix Printing', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.NodeBot3'))
+	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Fix Printing');
     session.endDialog();
@@ -169,7 +195,7 @@ bot.dialog('Fix Printing', function (session) {
     matches: 'Fix Printing'
 });
 bot.dialog('Mobile Email', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.NodeBot3'))
+	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Mobile Email');
     session.endDialog();
@@ -181,7 +207,7 @@ bot.dialog('Mobile Email', function (session) {
     matches: 'Mobile Email'
 });
 bot.dialog('Backup Files', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.NodeBot3'))
+	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Backup Files');
     session.endDialog();
@@ -193,7 +219,7 @@ bot.dialog('Backup Files', function (session) {
     matches: 'Backup Files'
 });
 bot.dialog('Restore Files', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.NodeBot3'))
+	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Restore Files');
     session.endDialog();
@@ -205,7 +231,7 @@ bot.dialog('Restore Files', function (session) {
     matches: 'Restore Files'
 });
 bot.dialog('Slow Internet', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.NodeBot3'))
+	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Slow Internet');
     session.endDialog();
@@ -217,7 +243,7 @@ bot.dialog('Slow Internet', function (session) {
     matches: 'Slow Internet'
 });
 bot.dialog('Error On Screen', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.NodeBot3'))
+	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Error On Screen');
     session.endDialog();
@@ -257,11 +283,38 @@ function createHeroCard(session) {
     return new builder.HeroCard(session)
         .title('Select your choice')
 		.buttons([
-            builder.CardAction.postBack(session, 'Bot.Command.NodeBot1', 'Service Tickets'),
-			builder.CardAction.postBack(session, 'Bot.Command.NodeBot2', 'Project Management'),
-			builder.CardAction.postBack(session, 'Bot.Command.NodeBot3', 'IT Task Automation'),
-			builder.CardAction.postBack(session, 'Bot.Command.NodeBot4', 'System Management'),
-			builder.CardAction.postBack(session, 'Bot.Command.NodeBot5', 'Trouble Shooting'),
-			builder.CardAction.postBack(session, 'Bot.Command.NodeBot6', 'System Status')	
+            builder.CardAction.postBack(session, 'Bot.Command.SubMenu.Service.NodeBot1', 'Service Tickets'),
+			builder.CardAction.postBack(session, 'Bot.Command.SubMenu.Service.NodeBot2', 'Project Management'),
+			builder.CardAction.postBack(session, 'Bot.Command.SubMenu.Service.NodeBot3', 'IT Task Automation'),
+			builder.CardAction.postBack(session, 'Bot.Command.SubMenu.Service.NodeBot4', 'System Management'),
+			builder.CardAction.postBack(session, 'Bot.Command.SubMenu.Service.NodeBot5', 'Trouble Shooting'),
+			builder.CardAction.postBack(session, 'Bot.Command.SubMenu.Service.NodeBot6', 'System Status')	
         ]);
 }
+function createMainMenuHeroCard(session) {
+    return new builder.HeroCard(session)
+        .title('Select your choice')
+		.buttons([
+            builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot1', 'Accounts Receivable'),
+			builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot2', 'Customer Service'),
+			builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot3', 'HR'),
+			builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot4', 'Marketing'),
+			builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot5', 'Operations'),
+			builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot6', 'Sales'),
+			builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot7', 'Service')			
+        ]);
+}
+function createServiceMenuHeroCard(session) {
+		session.send('Hi, I am PivBot for Service. Please tell me what you would like me to do.or type "help" at any time to be guided through my options.');		
+		var card = createHeroCard(session);
+        // attach the card to the reply message
+        var msg = new builder.Message(session).addAttachment(card);
+        session.send(msg);
+}
+function getMainMenuHeroCard(session) {
+		var card = createMainMenuHeroCard(session);
+        // attach the card to the reply message
+        var msg = new builder.Message(session).addAttachment(card);
+        session.send(msg);
+}
+	createMainMenuHeroCard
