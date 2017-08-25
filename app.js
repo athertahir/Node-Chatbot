@@ -317,4 +317,3 @@ function getMainMenuHeroCard(session) {
         var msg = new builder.Message(session).addAttachment(card);
         session.send(msg);
 }
-	createMainMenuHeroCard
