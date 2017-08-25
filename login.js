@@ -21,8 +21,10 @@ module.exports = [
         next();
     },
 	function (session) {
-	userlogin(session)
+	userlogin(session);
+	session.send('login 1');
     session.endDialog();
+	session.send('login 2');
     }
 ]
 function userlogin(session) {
