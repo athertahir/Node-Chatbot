@@ -28,6 +28,6 @@ module.exports = [
     }
 ]
 function userlogin(session) {
-		session.privateConversationData[login] = true;
+		session.privateConversationData['login'] = true;
 		session.send('login Successfull');
 }
