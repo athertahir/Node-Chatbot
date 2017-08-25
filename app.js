@@ -25,7 +25,7 @@ selectedbutton = session.message.text;
 session.send("You said: %s", selectedbutton);
 session.send("Count is : %s", count);
     	// Echo back users text
-		if(login==true && count<10)
+		if(login==true && count==0)
 		{
 			count=count+1;
 			session.send('Hi there. I m PivBot, an IT automation and Artificial Intelligence (AI) service provided by Catalyst Technology Group to help you perform a variety of IT tasks. Please choose an area to get started');	
