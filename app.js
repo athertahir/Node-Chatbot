@@ -35,6 +35,7 @@ session.send("You said: %s", selectedbutton);
 		if(!selectedbutton.indexOf('Bot.Command.MainMenu.NodeBot1'))
 		{
 		session.send('You Selected Accounts Receivable');
+		count=0;
 		}
 		else if(!selectedbutton.indexOf('Bot.Command.MainMenu.NodeBot2'))
 		{
