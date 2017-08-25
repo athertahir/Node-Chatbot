@@ -1,8 +1,8 @@
 var restify = require('restify');
 var builder = require('botbuilder');
 var selectedbutton='';
-var login=true;
-var count=0;
+var login='login';
+var count='count';
 // Setup Restify Server
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 80, function () {
@@ -25,9 +25,8 @@ selectedbutton = session.message.text;
 //session.send("You said: %s", selectedbutton);
 //session.send("Count is : %s", count);
     	// Echo back users text
-		if(login==true && count==0)
-		{
-			count=count+1;
+		if (!session.privateConversationData[login]) {
+			session.privateConversationData[login] = true;
 			session.send('Hi there. I m PivBot, an IT automation and Artificial Intelligence (AI) service provided by Catalyst Technology Group to help you perform a variety of IT tasks. Please choose an area to get started');	
 			getMainMenuHeroCard(session);
 		}
@@ -36,7 +35,6 @@ selectedbutton = session.message.text;
 		if(!selectedbutton.indexOf('Bot.Command.MainMenu.NodeBot1'))
 		{
 		session.send('You Selected Accounts Receivable');
-		count=0;
 		}
 		else if(!selectedbutton.indexOf('Bot.Command.MainMenu.NodeBot2'))
 		{
