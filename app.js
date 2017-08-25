@@ -93,38 +93,26 @@ var recognizer = new builder.LuisRecognizer('https://westus.api.cognitive.micros
 bot.recognizer(recognizer);
 
 bot.dialog('Add Tickets', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot1'))
-	{
+	
     session.send('Inside Add Tickets');
     session.endDialog();
-	}
-	else{
-			
-		}
+
     }).triggerAction({
     matches: 'Add Tickets'
 });
 bot.dialog('Open Tickets', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot1'))
-	{
+
     session.send('Inside Open Tickets');
     session.endDialog();
-	}
-	else{
-			
-		}
+
     }).triggerAction({
     matches: 'Open Tickets'
 });
 bot.dialog('Update Tickets', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot1'))
-	{
+
     session.send('Inside Update Tickets');
     session.endDialog();
-	}
-	else{
-			
-		}
+
     }).triggerAction({
     matches: 'Update Tickets'
 });
@@ -147,124 +135,81 @@ bot.dialog('Project Status', function (session) {
 });
 //////////////////////////////////////
 bot.dialog('Show PC Script', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
-	{
+
     session.send('Inside Show PC Script');
     session.endDialog();
-	}
-	else{
-			
-		}
     }).triggerAction({
     matches: 'Show PC Script'
 });
 bot.dialog('Windows Patching', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
-	{
+
     session.send('Inside Windows Patching');
     session.endDialog();
-	}
-	else{
-			
-		}
+
     }).triggerAction({
     matches: 'Windows Patching'
 });
 bot.dialog('Install Software', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
-	{
+
     session.send('Inside Install Software');
     session.endDialog();
-	}
-	else{
-			
-		}
+
     }).triggerAction({
     matches: 'Install Software'
 });
 bot.dialog('Fix Printing', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
-	{
+
     session.send('Inside Fix Printing');
     session.endDialog();
-	}
-	else{
-			
-		}
     }).triggerAction({
     matches: 'Fix Printing'
 });
 bot.dialog('Mobile Email', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
-	{
+
     session.send('Inside Mobile Email');
     session.endDialog();
-	}
-	else{
-			
-		}
+
     }).triggerAction({
     matches: 'Mobile Email'
 });
 bot.dialog('Backup Files', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
-	{
+
     session.send('Inside Backup Files');
     session.endDialog();
-	}
-	else{
-			
-		}
+
     }).triggerAction({
     matches: 'Backup Files'
 });
 bot.dialog('Restore Files', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
-	{
+
     session.send('Inside Restore Files');
     session.endDialog();
-	}
-	else{
-			
-		}
+
     }).triggerAction({
     matches: 'Restore Files'
 });
 bot.dialog('Slow Internet', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
-	{
+
     session.send('Inside Slow Internet');
     session.endDialog();
-	}
-	else{
-			
-		}
+	
     }).triggerAction({
     matches: 'Slow Internet'
 });
 bot.dialog('Error On Screen', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
-	{
+
     session.send('Inside Error On Screen');
     session.endDialog();
-	}
-	else{
-			
-		}
+
     }).triggerAction({
     matches: 'Error On Screen'
 });
 //////////////////////////////////////
 
 bot.dialog('Help', function (session) {
-    	// Echo back users text
 		session.send("Inside Help");
-		session.send("Select your choice from given choices");
-		var card = createHeroCard(session);
-        // attach the card to the reply message
-        var msg = new builder.Message(session).addAttachment(card);
-        session.send(msg);
-    session.endDialog();
+		session.send("Select your choice");
+		getMainMenuHeroCard(session);
     }).triggerAction({
     matches: 'Help'
 });
