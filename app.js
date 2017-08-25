@@ -22,12 +22,10 @@ server.post('/api/messages', connector.listen());
 // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
 var bot = new builder.UniversalBot(connector, function (session) {
 selectedbutton = session.message.text;
-//session.send("You said: %s", selectedbutton);
+session.send("You said: %s", selectedbutton);
     	// Echo back users text
-		if(login==true && count==5)
+		if(login==true && count==0)
 		{
-				session.send('Hi there');
-			session.send('Hi there' +count);
 			count=count+1;
 			session.send('Hi there. I m PivBot, an IT automation and Artificial Intelligence (AI) service provided by Catalyst Technology Group to help you perform a variety of IT tasks. Please choose an area to get started');	
 			getMainMenuHeroCard(session);
