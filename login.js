@@ -22,12 +22,11 @@ module.exports = [
     },
 	function (session) {
 	userlogin(session);
-	session.send('login 1');
     session.endDialog();
-	session.send('login 2');
     }
 ]
 function userlogin(session) {
 		session.privateConversationData['login'] = true;
+		session.privateConversationData['signing']=true;
 		session.send('login Successfull');
 }
