@@ -88,6 +88,7 @@ selectedbutton = session.message.text;
 
 
 });
+bot.dialog('login', require('./login'));
 //Create LUIS recognizer that points at our model and add it as the root '/' dialog.
 var recognizer = new builder.LuisRecognizer('https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/48b85d6c-6e89-4904-a2d6-3d3e73419bd8?subscription-key=c76b19ffad1b4166a4d2c21b64bc1c00&timezoneOffset=0&verbose=true&q=');/*here we use the URL that we copied earlier*/
 bot.recognizer(recognizer);
