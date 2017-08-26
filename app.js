@@ -27,9 +27,7 @@ selectedbutton = session.message.text;
     	// Echo back users text
 		if (!session.privateConversationData[login]) {
 			session.beginDialog('login');
-			//while()
-			session.send('Hi there. I m PivBot, an IT automation and Artificial Intelligence (AI) service provided by Catalyst Technology Group to help you perform a variety of IT tasks. Please choose an area to get started');	
-			getMainMenuHeroCard(session);
+
 		}
 		else
 		{
