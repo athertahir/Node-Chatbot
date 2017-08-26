@@ -8,7 +8,7 @@ module.exports = [
     },
     function (session, results, next) {
         session.dialogData.username = results.response;
-        session.send('Username %s', results.response);
+        //session.send('Username %s', results.response);
         next();
     },
 	 // PASSWORD
@@ -17,7 +17,7 @@ module.exports = [
     },
     function (session, results, next) {
         session.dialogData.password = results.response;
-        session.send('Password %s', results.response);
+        //session.send('Password %s', results.response);
         next();
     },
 	function (session) {
