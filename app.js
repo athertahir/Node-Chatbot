@@ -75,7 +75,7 @@ selectedbutton = session.message.text;
 		}
 		else if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 		{
-		session.send('Available operations are : \n\n \t\t Show PC Script \n\n \t\t Windows Patching \n\n \t\t Install Software \n\n \t\t Fix Printing \n\n \t\t Password Issues \n\n \t\t Mobile Email \n\n \t\t Backup Files \n\n \t\t Restore Files \n\n \t\t Slow Internet \n\n \t\t Error On Screen');
+		session.send('Available operations are : \n\n \t\t Slow PC Script \n\n \t\t Windows Patching \n\n \t\t Install Software \n\n \t\t Fix Printing \n\n \t\t Password Issues \n\n \t\t Mobile Email \n\n \t\t Backup Files \n\n \t\t Restore Files \n\n \t\t Slow Internet \n\n \t\t Error On Screen');
 		}
 		else if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot4'))
 		{
@@ -102,11 +102,12 @@ bot.dialog('Add Tickets', function (session) {
 	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot1'))
 	{
     session.send('Inside Add Tickets');
-    session.endDialog();
+
 	}
 	else{
 			
 		}
+	session.endDialog();
     }).triggerAction({
     matches: 'Add Tickets'
 });
@@ -126,11 +127,12 @@ bot.dialog('Update Tickets', function (session) {
 	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot1'))
 	{
     session.send('Inside Update Tickets');
-    session.endDialog();
+    
 	}
 	else{
 			
 		}
+	session.endDialog();
     }).triggerAction({
     matches: 'Update Tickets'
 });
@@ -152,27 +154,29 @@ bot.dialog('Project Status', function (session) {
     matches: 'Project Status'
 });
 //////////////////////////////////////
-bot.dialog('Show PC Script', function (session) {
+bot.dialog('Slow PC Script', function (session) {
 	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
-    session.send('Inside Show PC Script');
-    session.endDialog();
+    session.send('Inside Slow PC Script');
+  
 	}
 	else{
 			
 		}
+		  session.endDialog();
     }).triggerAction({
-    matches: 'Show PC Script'
+    matches: 'Slow PC Script'
 });
 bot.dialog('Windows Patching', function (session) {
 	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Windows Patching');
-    session.endDialog();
+
 	}
 	else{
 			
 		}
+	session.endDialog();
     }).triggerAction({
     matches: 'Windows Patching'
 });
@@ -180,11 +184,12 @@ bot.dialog('Install Software', function (session) {
 	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Install Software');
-    session.endDialog();
+   
 	}
 	else{
 			
 		}
+	session.endDialog();
     }).triggerAction({
     matches: 'Install Software'
 });
@@ -192,11 +197,12 @@ bot.dialog('Fix Printing', function (session) {
 	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Fix Printing');
-    session.endDialog();
+
 	}
 	else{
 			
 		}
+	session.endDialog();
     }).triggerAction({
     matches: 'Fix Printing'
 });
@@ -204,11 +210,12 @@ bot.dialog('Mobile Email', function (session) {
 	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Mobile Email');
-    session.endDialog();
+    
 	}
 	else{
 			
 		}
+	session.endDialog();
     }).triggerAction({
     matches: 'Mobile Email'
 });
@@ -216,11 +223,12 @@ bot.dialog('Backup Files', function (session) {
 	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Backup Files');
-    session.endDialog();
+
 	}
 	else{
 			
 		}
+	session.endDialog();
     }).triggerAction({
     matches: 'Backup Files'
 });
@@ -228,11 +236,12 @@ bot.dialog('Restore Files', function (session) {
 	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Restore Files');
-    session.endDialog();
+
 	}
 	else{
 			
 		}
+	session.endDialog();
     }).triggerAction({
     matches: 'Restore Files'
 });
@@ -240,11 +249,12 @@ bot.dialog('Slow Internet', function (session) {
 	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
 	{
     session.send('Inside Slow Internet');
-    session.endDialog();
+
 	}
 	else{
 			
 		}
+	session.endDialog();
     }).triggerAction({
     matches: 'Slow Internet'
 });
@@ -257,6 +267,7 @@ bot.dialog('Error On Screen', function (session) {
 	else{
 			
 		}
+	session.endDialog();
     }).triggerAction({
     matches: 'Error On Screen'
 });
@@ -265,8 +276,8 @@ bot.dialog('Error On Screen', function (session) {
 bot.dialog('Help', function (session) {
     	// Echo back users text
 		session.send("Inside Help");
-		session.send("Select your choice from given choices");
-		var card = createHeroCard(session);
+		//session.send("Select your choice:");
+		var card = createMainMenuHeroCard(session);
         // attach the card to the reply message
         var msg = new builder.Message(session).addAttachment(card);
         session.send(msg);
@@ -279,7 +290,7 @@ bot.dialog('Help', function (session) {
 
 bot.dialog('None', function (session) {
     	// Echo back users text
-		session.send("Inside None,, said: %s", session.message.text);
+	session.send("Sorry, I couldn't understand.");
     session.endDialog();
     }).triggerAction({
     matches: 'None'
@@ -298,17 +309,26 @@ function createHeroCard(session) {
         ]);
 }
 function createMainMenuHeroCard(session) {
-    return new builder.HeroCard(session)
+	var but=[];
+		if(session.privateConversationData['accounts_receivable'] == true)
+		but.push( builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot1', 'Accounts Receivable'));
+		if(session.privateConversationData['customer_service'] == true)
+		but.push( builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot2', 'Customer Service'));
+		if(session.privateConversationData['hr'] == true)
+		but.push( builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot3', 'HR'));
+		if(session.privateConversationData['marketing'] == true)
+		but.push( builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot4', 'Marketing'));
+		if(session.privateConversationData['operations'] == true)
+		but.push(builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot5', 'Operations'));
+		if(session.privateConversationData['sales'] == true)
+		but.push(builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot6', 'Sales'));
+		if(session.privateConversationData['service'] == true)
+		but.push( builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot7', 'Service'));		
+	var card;
+    card= new builder.HeroCard(session)
         .title('Select your choice')
-		.buttons([
-            builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot1', 'Accounts Receivable'),
-			builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot2', 'Customer Service'),
-			builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot3', 'HR'),
-			builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot4', 'Marketing'),
-			builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot5', 'Operations'),
-			builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot6', 'Sales'),
-			builder.CardAction.postBack(session, 'Bot.Command.MainMenu.NodeBot7', 'Service')			
-        ]);
+		.buttons(but);
+		return card;
 }
 function createServiceMenuHeroCard(session) {
 		session.send('Hi, I am PivBot for Service. Please tell me what you would like me to do.or type "help" at any time to be guided through my options.');		
