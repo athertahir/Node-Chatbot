@@ -2,7 +2,6 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var selectedbutton='';
 var login='login';
-var count='count';
 // Setup Restify Server
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 80, function () {
@@ -23,8 +22,15 @@ server.post('/api/messages', connector.listen());
 var bot = new builder.UniversalBot(connector, function (session) {
 selectedbutton = session.message.text;
 ////session.send("You said: %s", selectedbutton);
-//session.send("Count is : %s", count);
     	// Echo back users text
+		//session.send('accounts_receivable is '+session.privateConversationData['accounts_receivable']);
+		//session.send('customer_service is '+session.privateConversationData['customer_service']);
+		//session.send('hr is '+session.privateConversationData['hr']);
+		//session.send('marketing is '+session.privateConversationData['marketing']);
+		//session.send('operations is '+session.privateConversationData['operations']);
+		//session.send('sales is '+session.privateConversationData['sales']);
+		//session.send('service is '+session.privateConversationData['service']);
+		//session.send('login is '+session.privateConversationData['login']);
 		if (!session.privateConversationData[login]) {
 			session.beginDialog('login');
 
