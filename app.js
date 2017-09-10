@@ -153,7 +153,8 @@ bot.dialog('Update Tickets', function (session) {
 });
 //////////////////////////////////////
 bot.dialog('Project Status', function (session) {
-
+	if(session.privateConversationData['sales'] == true)
+	{
     session.send('Here is your project status');
 	var card = new builder.HeroCard(session)
         .title('Project Status')
@@ -163,6 +164,10 @@ bot.dialog('Project Status', function (session) {
         // attach the card to the reply message
         var msg = new builder.Message(session).addAttachment(card);
         session.send(msg);
+	}
+	else{
+			 session.send('You are not Authorized to access \'Slow PC Script\' ');
+	}
     session.endDialog();
     }).triggerAction({
     matches: 'Project Status'
