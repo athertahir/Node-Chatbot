@@ -1,5 +1,6 @@
 var restify = require('restify');
 var builder = require('botbuilder');
+var dateFormat = require('dateformat');
 var selectedbutton='';
 var login='login';
 // Setup Restify Server
@@ -21,7 +22,7 @@ server.post('/api/messages', connector.listen());
 // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
 var bot = new builder.UniversalBot(connector, function (session) {
 selectedbutton = session.message.text;
-////session.send("You said: %s", selectedbutton);
+        //session.send("You said: %s", selectedbutton);
     	// Echo back users text
 		//session.send('accounts_receivable is '+session.privateConversationData['accounts_receivable']);
 		//session.send('customer_service is '+session.privateConversationData['customer_service']);
@@ -64,6 +65,7 @@ selectedbutton = session.message.text;
 		else if(!selectedbutton.indexOf('Bot.Command.MainMenu.NodeBot7'))
 		{
 		createServiceMenuHeroCard(session);
+			
 		}
 		else if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot1'))
 		{
@@ -89,13 +91,26 @@ selectedbutton = session.message.text;
 		{
 		session.send('Currently, No Operations for System Status');
 		}
+		else if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.SlowPC.NodeBot1'))
+		{
+		var url ='https://kaseya.catalysttg.com/api/v1.0/automation/agentprocs/'+session.privateConversationData['machineId']+'/534887023/schedule';
+		session.send(url);
+		var json='{"ScriptPrompts":[{"Caption":"machineid","Name":"machineid","Value":"'+session.privateConversationData['machineId']+'"}],"Start":{"StartOn":"'+session.privateConversationData['datetime']+'"}}';
+		session.send(json);
+		//session.send(JSON.parse(json));
+		}
+		else if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.SlowPC.NodeBot2'))
+		{
+		session.send('You Selected \'No\' ');
+		}
 		}
 
 
 });
 bot.dialog('login', require('./login'));
+bot.dialog('getMachineId', require('./getMachineId'));
 //Create LUIS recognizer that points at our model and add it as the root '/' dialog.
-var recognizer = new builder.LuisRecognizer('https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/48b85d6c-6e89-4904-a2d6-3d3e73419bd8?subscription-key=c76b19ffad1b4166a4d2c21b64bc1c00&timezoneOffset=0&verbose=true&q=');/*here we use the URL that we copied earlier*/
+var recognizer = new builder.LuisRecognizer('https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/160cedfd-9a4e-4faa-a991-bf63247dd457?subscription-key=638ee9aeb729407aa09215840a0cae05&verbose=true&timezoneOffset=0&q=');/*here we use the URL that we copied earlier*/
 bot.recognizer(recognizer);
 
 bot.dialog('Add Tickets', function (session) {
@@ -149,21 +164,43 @@ bot.dialog('Project Status', function (session) {
         var msg = new builder.Message(session).addAttachment(card);
         session.send(msg);
     session.endDialog();
-    session.endDialog();
     }).triggerAction({
     matches: 'Project Status'
 });
 //////////////////////////////////////
-bot.dialog('Slow PC Script', function (session) {
-	if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.NodeBot3'))
+bot.dialog('Slow PC Script', function (session,args) {
+	if(session.privateConversationData['service'] == true)
 	{
-    session.send('Inside Slow PC Script');
-  
+   // session.send('Inside Slow PC Script');
+	var machinename = builder.EntityRecognizer.findEntity(args.intent.entities, 'machinename');
+	if(machinename)
+	{
+    session.send("MachineName: %s ", machinename.entity);
+	session.privateConversationData['machineName'] =machinename.entity;
+	}
+	else
+	session.send('Sorry, I couldn\'t find machinename \n\n \t\t Available options are : \n\n \t\t Run slow pc optimization script on \'MACHINE_NAME\' now \n\n \t\t Run slow pc optimization script on \'MACHINE_NAME\' \'ENTER_TIME_HERE\' ' );
+	var datetime = builder.EntityRecognizer.findEntity(args.intent.entities,'builtin.datetimeV2.datetime');
+	if(datetime)
+	{
+	session.send("DateTime: %s ",dateFormat(datetime.resolution.values[0]['value']),"yyyy-MM-dd'T'HH:mm:ss'Z'");
+	//session.privateConversationData['datetime'] =datetime.resolution.values[0]['value'];
+	session.send("DateTime: %s ",datetime.resolution.values[0]['value']);
+	session.privateConversationData['datetime'] =dateFormat(datetime.resolution.values[0]['value'],"yyyy-mm-dd'T'HH:mm:ss'Z'");
+	}
+	else
+	session.send('Sorry, I couldn\'t find dateTime \n\n \t\t Available options are : \n\n \t\t Run slow pc optimization script on \'MACHINE_NAME\' now \n\n \t\t Run slow pc optimization script on \'MACHINE_NAME\' \'ENTER_TIME_HERE\' ' );
+    if(machinename && datetime)
+	session.beginDialog('getMachineId');
+	else
+	{
+		//session.send('Error : '+machinename && datetime);
+	}
 	}
 	else{
-			
+			 session.send('You are not Authorized to access \'Slow PC Script\' ');
 		}
-		  session.endDialog();
+	session.endDialog();
     }).triggerAction({
     matches: 'Slow PC Script'
 });
@@ -288,13 +325,7 @@ bot.dialog('Help', function (session) {
 
 //////////////////////////////////////
 
-bot.dialog('None', function (session) {
-    	// Echo back users text
-	session.send("Sorry, I couldn't understand.");
-    session.endDialog();
-    }).triggerAction({
-    matches: 'None'
-});
+
 
 function createHeroCard(session) {
     return new builder.HeroCard(session)
@@ -343,3 +374,4 @@ function getMainMenuHeroCard(session) {
         var msg = new builder.Message(session).addAttachment(card);
         session.send(msg);
 }
+
