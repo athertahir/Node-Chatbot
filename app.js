@@ -183,9 +183,9 @@ bot.dialog('Slow PC Script', function (session,args) {
 	var datetime = builder.EntityRecognizer.findEntity(args.intent.entities,'builtin.datetimeV2.datetime');
 	if(datetime)
 	{
-	session.send("DateTime: %s ",dateFormat(datetime.resolution.values[0]['value']),"yyyy-MM-dd'T'HH:mm:ss'Z'");
+	//session.send("DateTime: %s ",dateFormat(datetime.resolution.values[0]['value']),"yyyy-MM-dd'T'HH:mm:ss'Z'");
 	//session.privateConversationData['datetime'] =datetime.resolution.values[0]['value'];
-	session.send("DateTime: %s ",datetime.resolution.values[0]['value']);
+	//session.send("DateTime: %s ",datetime.resolution.values[0]['value']);
 	session.privateConversationData['datetime'] =dateFormat(datetime.resolution.values[0]['value'],"yyyy-mm-dd'T'HH:mm:ss'Z'");
 	}
 	else
