@@ -9,6 +9,7 @@ module.exports = [
     },
     function (session, results, next) {
         session.dialogData.username = results.response;
+		session.privateConversationData['username'] = results.response;
         //session.send('Username %s', session.dialogData.username);
         next();
     },
@@ -18,6 +19,7 @@ module.exports = [
     },
     function (session, results, next) {
         session.dialogData.password = results.response;
+		session.privateConversationData['userpassword'] = results.response;
         //session.send('Password %s', session.dialogData.password);
         next();
     },
@@ -54,7 +56,7 @@ connection.on('connect', function(err)
 
        // Read all rows from table
      request = new Request(
-            "select rolename from roles where Id=(select id from users where username='"+session.dialogData.username+"' and userpassword='"+session.dialogData.password+"')",
+            "select rolename from roles where Id=(select companyid from users where username='"+session.dialogData.username+"' and userpassword='"+session.dialogData.password+"')",
 		
 			function(err, rowCount, rows) 
                 {

@@ -5,7 +5,7 @@ var selectedbutton='';
 var login='login';
 // Setup Restify Server
 var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 80, function () {
+server.listen(process.env.port || process.env.PORT || 81 || 80, function () {
    console.log('%s listening to %s', server.name, server.url); 
 });
 
@@ -22,7 +22,7 @@ server.post('/api/messages', connector.listen());
 // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
 var bot = new builder.UniversalBot(connector, function (session) {
 selectedbutton = session.message.text;
-        //session.send("You said: %s", selectedbutton);
+
     	// Echo back users text
 		//session.send('accounts_receivable is '+session.privateConversationData['accounts_receivable']);
 		//session.send('customer_service is '+session.privateConversationData['customer_service']);
@@ -93,7 +93,7 @@ selectedbutton = session.message.text;
 		}
 		else if(!selectedbutton.indexOf('Bot.Command.SubMenu.Service.SlowPC.NodeBot1'))
 		{
-		var url ='https://kaseya.catalysttg.com/api/v1.0/automation/agentprocs/'+session.privateConversationData['machineId']+'/534887023/schedule';
+		var url =session.privateConversationData['kaseyaHostApi']+session.privateConversationData['machineId']+'/534887023/schedule';
 		session.send(url);
 		var json='{"ScriptPrompts":[{"Caption":"machineid","Name":"machineid","Value":"'+session.privateConversationData['machineId']+'"}],"Start":{"StartOn":"'+session.privateConversationData['datetime']+'"}}';
 		session.send(json);
@@ -191,7 +191,7 @@ bot.dialog('Slow PC Script', function (session,args) {
 	//session.send("DateTime: %s ",dateFormat(datetime.resolution.values[0]['value']),"yyyy-MM-dd'T'HH:mm:ss'Z'");
 	//session.privateConversationData['datetime'] =datetime.resolution.values[0]['value'];
 	//session.send("DateTime: %s ",datetime.resolution.values[0]['value']);
-	session.privateConversationData['datetime'] =dateFormat(datetime.resolution.values[0]['value'],"yyyy-mm-dd'T'HH:mm:ss'Z'");
+	session.privateConversationData['datetime'] =dateFormat(datetime.resolution.values[0]['value'],"yyyy-mm-dd'T'HH:MM:ss'Z'");
 	}
 	else
 	session.send('Sorry, I couldn\'t find dateTime \n\n \t\t Available options are : \n\n \t\t Run slow pc optimization script on \'MACHINE_NAME\' now \n\n \t\t Run slow pc optimization script on \'MACHINE_NAME\' \'ENTER_TIME_HERE\' ' );
